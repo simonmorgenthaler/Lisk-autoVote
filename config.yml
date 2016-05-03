@@ -1,0 +1,83 @@
+########################################################################################################################################
+# File name: config.yml                                                                                                                #
+# Author: cc001                                                                                                                        #
+# Last modified: 2016-05-03                                                                                                            #
+#                                                                                                                                      #
+# Instructions:                                                                                                                        #
+# 1. Keep the indents as shown below                                                                                                   #
+# 2. You need to adapt all variables (node, mySecret, mySecret, mySecondSecret, myAddress, myPublicKey, positiveVotingFilename,        #
+#    negativeVotingFilename) and replace everywhere REPLACE_ME with your own values                                                    #
+# 3. You can keep and use only the section "default:" if you want.                                                                     #
+#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        #                                                                                       #
+# 4. If you want to, you can add additional config sections. This can be used if you want to vote with different accounts              #
+#    To run the script with a specific config section (not "default") you must add its name to the starting call.                      #
+#    Example: './autoVote.py cc001'                                                                                                    #
+#    An example config could look like this:                                                                                           #
+#    default:                                                                                                                          #
+#        node: "https://asdfasdf.io"                                                                                                   #
+#        mySecret: "asdf asdf asdf asdf asdf"                                                                                          #
+#        mySecondSecret: "wergwer werg werg wegg"                                                                                      #
+#        myAddress: "2143123451235235L"                                                                                                #
+#        myPublicKey: "awd98wefh9qehf923hf98hf9238fh9238hf"                                                                            #
+#        positiveVotingFilename: "./posDefault.txt"                                                                                    #
+#        negativeVotingFilename: "./negDefault.txt"                                                                                    #
+#                                                                                                                                      #
+#    cc001:                                                                                                                            #
+#        node: "https://othernode.io"                                                                                                  #
+#        mySecret: "rtzu rtzu rtzu rtzu rtzu"                                                                                          #
+#        mySecondSecret: ""                                                                                                            #
+#        myAddress: "32333333333333L"                                                                                                  #
+#        myPublicKey: "aregwert8347rzr84hg283r7g23twert"                                                                               #
+#        positiveVotingFilename: "/home/cc001/pos_cc001.txt"                                                                           #
+#        negativeVotingFilename: "/home/cc001/neg_cc001.txt"                                                                           #
+#                                                                                                                                      #
+# If you like this script, please vote for me as Delegate on test- and mainnet, Thanks!                                                #
+########################################################################################################################################
+
+default:
+    # Add here a node where you want to send the api commands to. I recommend to use your own node.
+    # I strongly recommend to use only nodes that are pretected with SSL (https://....)
+    # because your secret passphrase needs to be submitted to this node to be able to vote.
+    # Make sure to not put a '/' at the end of it
+    # Example:
+    # node: "https://login.lisk.io"
+    node: "REPLACE_ME"
+
+    # Add here your secret passphrase of the account you want to use to vote
+    # The passphrase is needed to be able to vote
+    # Example:
+    # mySecret: "word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12" 
+    mySecret: "REPLACE_ME"
+    
+    # Add here your second passphrase if you configured it. If no second passphrase is configured, leave it empyt (mySecondSecret: "")
+    # The passphrase is needed to be able to vote
+    # Example:
+    # mySecondSecret: "" 
+    mySecondSecret: "REPLACE_ME"
+
+    # Add here the address of the account you want to use to vote (the account of the passphrase above)
+    # Example:
+    # myAddress: "12312352346456L"
+    myAddress: "REPLACE_ME"
+
+    # Add here the PublicKey of your account
+    # Example:
+    # myPublicKey: "234234645jfweijf9384rz76gr39ehg938th283th398gh94ghb832gb9238gbwiegb83f"
+    myPublicKey: "REPLACE_ME"
+
+    # Add here the filename (complete path or just the name if it is in the same directory) of the file
+    # that contains the addresses of the delegates you want to vote POSITIVE
+    # You can use the delegatename, address, or publickey (or a mixture of all of them)
+    # Write every address, delegatename or publickey on its own line. Don't separate them with special characters like ,;: etc...
+    # The File can be left empty, but it must exist
+    # Example:
+    # positiveVotingFilename: "posDefault.txt"
+    positiveVotingFilename: "REPLACE_ME"
+
+    # Add here the filename (complete path) of the file that contains the addresses of the delegates you want to vote NETGATIVE
+    # You can use the delegatename, address, or publickey
+    # Write every address, delegatename or publickey on its own line. Don't add special characters like ,;: etc...
+    # The File can be left empty, but it must exist
+    # Example:
+    # negativeVotingFilename: "negDefault.txt"
+    negativeVotingFilename: "REPLACE_ME"
