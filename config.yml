@@ -1,14 +1,14 @@
 ########################################################################################################################################
 # File name: config.yml                                                                                                                #
 # Author: cc001                                                                                                                        #
-# Last modified: 2016-05-03                                                                                                            #
+# Last modified: 2016-05-19                                                                                                            #
 #                                                                                                                                      #
 # Instructions:                                                                                                                        #
 # 1. Keep the indents as shown below                                                                                                   #
 # 2. You need to adapt all variables (node, mySecret, mySecret, mySecondSecret, myAddress, myPublicKey, positiveVotingFilename,        #
 #    negativeVotingFilename) and replace everywhere REPLACE_ME with your own values                                                    #
 # 3. You can keep and use only the section "default:" if you want.                                                                     #
-#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        #                                                                                       #
+#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        # #                                                                                                                                      #
 # 4. If you want to, you can add additional config sections. This can be used if you want to vote with different accounts              #
 #    To run the script with a specific config section (not "default") you must add its name to the starting call.                      #
 #    Example: './autoVote.py cc001'                                                                                                    #
@@ -19,8 +19,8 @@
 #        mySecondSecret: "wergwer werg werg wegg"                                                                                      #
 #        myAddress: "2143123451235235L"                                                                                                #
 #        myPublicKey: "awd98wefh9qehf923hf98hf9238fh9238hf"                                                                            #
-#        positiveVotingFilename: "./posDefault.txt"                                                                                    #
-#        negativeVotingFilename: "./negDefault.txt"                                                                                    #
+#        positiveVotingFilename: "posDefault.txt"                                                                                      #
+#        negativeVotingFilename: "negDefault.txt"                                                                                      #
 #                                                                                                                                      #
 #    cc001:                                                                                                                            #
 #        node: "https://othernode.io"                                                                                                  #
@@ -50,7 +50,6 @@ default:
     mySecret: "REPLACE_ME"
     
     # Add here your second passphrase if you configured it. If no second passphrase is configured, leave it empyt (mySecondSecret: "")
-    # The passphrase is needed to be able to vote
     # Example:
     # mySecondSecret: "" 
     mySecondSecret: "REPLACE_ME"
