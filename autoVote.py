@@ -200,6 +200,8 @@ def readConfig():
         print "Please read the instructions at the top of this file and adapt the configuration in config.yml accordingly"
         exit (0)
 
+    config['node'] = config['node'].rstrip('/') # Remove trailing slashes
+
 readConfig()
 allDelegates = getAllDelegates()
 finalVotingList = generateVotingList()
