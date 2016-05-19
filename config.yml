@@ -72,7 +72,7 @@ default:
     # The File can be left empty, but it must exist
     # Example:
     # positiveVotingFilename: "posDefault.txt"
-    positiveVotingFilename: "REPLACE_ME"
+    positiveVotingFilename: "posDefault.txt"
 
     # Add here the filename (complete path) of the file that contains the addresses of the delegates you want to vote NETGATIVE
     # You can use the delegatename, address, or publickey
@@ -80,4 +80,4 @@ default:
     # The File can be left empty, but it must exist
     # Example:
     # negativeVotingFilename: "negDefault.txt"
-    negativeVotingFilename: "REPLACE_ME"
+    negativeVotingFilename: "negDefault.txt"
