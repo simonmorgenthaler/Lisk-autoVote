@@ -173,8 +173,8 @@ def getAllDelegates():
     return allDelegates
     
 def help():
-    print "You need to append the filename of your configuration"
-    print "Example:", sys.argv[0], "configcc001.py"
+    print "You need to append the desired config section"
+    print "Example:", sys.argv[0], "cc001"
 
 def readConfig():
     global config
