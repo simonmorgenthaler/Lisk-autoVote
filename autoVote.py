@@ -226,7 +226,9 @@ if finalVotingList:
 
         answer = sendVotings(payload)
         if answer['success']:
-            print "Voted successfully for " + str(len(shortDelegates)) + " delegates"
+            print "Voted successfully for " + str(len(shortDelegates)) + " delegates:"
+            for delegate in shortDelegates:
+                print getDelegateName(delegate[1:])
         else:
             print "Error:", answer['error']
         start = start + numberOfVotesPerTransaction
