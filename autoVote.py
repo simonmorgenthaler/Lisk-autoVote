@@ -146,7 +146,7 @@ def getVotingPubKeys():
 def getAnswer(query):  
     answer = ""
     try:
-        response = requests.get(url=query, timeout=0.5)
+        response = requests.get(url=query, timeout=3)
         answer = json.loads(response.text)
     except requests.exceptions.RequestException as e:
         answer = []
