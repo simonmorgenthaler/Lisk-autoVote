@@ -35,9 +35,10 @@ def getMyVotes():
     myVotes = []
     query = config['node'] + "/api/accounts/delegates/?address=" + config['myAddress']
     answer = getAnswer(query)
-    delegates = answer['delegates']
-    for delegate in delegates:
-        myVotes.append(delegate['publicKey'])
+    if 'delegates' in answer:
+        delegates = answer['delegates']
+        for delegate in delegates:
+            myVotes.append(delegate['publicKey'])
     return myVotes
 
 def getVotingPublicKeysFromFile(positive):
@@ -148,11 +149,18 @@ def getAnswer(query):
     try:
         response = requests.get(url=query, timeout=3)
         answer = json.loads(response.text)
+    except requests.exceptions.SSLError as e:
+        print "SSLError", e.message
+        print "Exiting..."
+        exit(1)
     except requests.exceptions.RequestException as e:
-        answer = []
+        print "Error:", e.message
+        print "Exiting..."
+        exit(1)
     except ValueError, e:
         print "Not allowed"
-        answer = []
+        print "Exiting..."
+        exit(1)
         
     return answer
     
@@ -165,11 +173,13 @@ def getAllDelegates():
         apiCall = "/api/delegates?limit=" + str(limit) + "&offset=" + str(offset) + "&orderBy=rate"
         query = config['node'] + apiCall
         answer = getAnswer(query)
-        allDelegates.extend(answer['delegates'])
-        if totalCount == -1:
-            totalCount = answer['totalCount']
-        offset = offset + limit
-        
+        if 'delegates' in answer:
+            allDelegates.extend(answer['delegates'])
+            if totalCount == -1:
+                totalCount = answer['totalCount']
+            offset = offset + limit
+        else:
+            break
     return allDelegates
     
 def help():
