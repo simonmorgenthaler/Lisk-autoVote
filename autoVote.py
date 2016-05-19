@@ -58,16 +58,16 @@ def getPublicKeys(votes):
     publicKeys = []
     notFoundVotes = []
     if votes:
-        template = "{0:22}|{1:22}|{2:22}|{3:35}"
+        template = "{0:22}|{1:22}|{2:<7}|{3:22}|{4:35}"
         print "\nFound:"
-        print template.format("Vote", "Username", "Adress", "PublicKey") # header
+        print template.format("Vote", "Username", "Rank", "Adress", "PublicKey") # header
         print "-------------------------------------------------------------------------------------------------------------------------------------"
       
         for vote in votes:
             found = False
             for delegate in allDelegates:
                 if delegate['username'] == vote or delegate['address'] == vote or delegate['publicKey'] == vote:
-                    print template.format(vote, delegate['username'], delegate['address'], delegate['publicKey'])
+                    print template.format(vote, delegate['username'], delegate['rate'], delegate['address'], delegate['publicKey'])
                     publicKeys.append(delegate['publicKey'])
                     found = True
                     break
