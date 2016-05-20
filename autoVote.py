@@ -105,9 +105,10 @@ def generateVotingList():
     print "\nNEGATIVE VOTES"
     votingPublicKeysNeg = getVotingPublicKeysFromFile(False)
     
-    if votingPublicKeysNeg and currentVotesPublicKeys:
+    removedList = list(set(votingPublicKeysNeg) - (set(currentVotesPublicKeys) & set(votingPublicKeysNeg)))
+    if len(removedList) > 0: 
         print "Removed the following negative votes, because you haven't voted for them:"
-        for entry in list(set(votingPublicKeysNeg) - (set(currentVotesPublicKeys) & set(votingPublicKeysNeg))):
+        for entry in removedList:
             print getDelegateName(entry)
     finalVotesListNeg = list(set(votingPublicKeysNeg) & set(currentVotesPublicKeys)) 
 
