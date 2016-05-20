@@ -7,9 +7,11 @@
 # 1. Keep the indents as shown below                                                                                                   #
 # 2. You need to adapt all variables (node, mySecret, mySecret, mySecondSecret, myAddress, myPublicKey, positiveVotingFilename,        #
 #    negativeVotingFilename) and replace everywhere REPLACE_ME with your own values                                                    #
-# 3. You can keep and use only the section "default:" if you want.                                                                     #
-#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        # #                                                                                                                                      #
-# 4. If you want to, you can add additional config sections. This can be used if you want to vote with different accounts              #
+# 3. You can leave 'mySecret' empty like this: mySecret: "". In this case the script will ask you for the passphrase during runtime    #
+# 4. If you don't use a second passphrase, remove it completely from the config (see section cc001 below)                              #
+# 5. You can keep and use only the section "default:" if you want.                                                                     #
+#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        #
+# 6. If you want to, you can add additional config sections. This can be used if you want to vote with different accounts              #
 #    To run the script with a specific config section (not "default") you must add its name to the starting call.                      #
 #    Example: './autoVote.py cc001'                                                                                                    #
 #    An example config could look like this:                                                                                           #
@@ -24,8 +26,7 @@
 #                                                                                                                                      #
 #    cc001:                                                                                                                            #
 #        node: "https://othernode.io"                                                                                                  #
-#        mySecret: "rtzu rtzu rtzu rtzu rtzu"                                                                                          #
-#        mySecondSecret: ""                                                                                                            #
+#        mySecret: ""                                                                                                                  #
 #        myAddress: "32333333333333L"                                                                                                  #
 #        myPublicKey: "aregwert8347rzr84hg283r7g23twert"                                                                               #
 #        positiveVotingFilename: "/home/cc001/pos_cc001.txt"                                                                           #
@@ -45,11 +46,14 @@ default:
 
     # Add here your secret passphrase of the account you want to use to vote
     # The passphrase is needed to be able to vote
+    # You can leave it empty like this: mySecret: "". In this case the script will ask you for the passphrase during running.
+    # This is for people who don't like writing a passphrase into a file.
     # Example:
     # mySecret: "word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12" 
     mySecret: "REPLACE_ME"
     
-    # Add here your second passphrase if you configured it. If no second passphrase is configured, leave it empyt (mySecondSecret: "")
+    # Add here your second passphrase if you configured it. If no second passphrase is configured, remove it completely.
+    # If you leave it empyt (mySecondSecret: "") the script will ask for it during runtime, as it does with mySecret.
     # Example:
     # mySecondSecret: "" 
     mySecondSecret: "REPLACE_ME"

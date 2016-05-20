@@ -10,7 +10,7 @@
 # Put every delegatename, accountnumber, or publickey on its own line                                              #
 # You can vote positive or negative ("un-vote") in one step, just add the accounts to the appropriate file.        #
 #                                                                                                                  #
-# Installation: make sure to have installed the imported modules time, httplib, socket, json, requests, os, yaml   #
+# Installation: make sure to have installed the modules time, httplib, socket, json, requests, os, yaml, getpass   #
 # Example: For the in Ubuntu this is done with 'sudo apt-get install python-httplib2 python-requests python-yaml'  #
 # You have to modify the file config.yaml to adapt it for your needs. See the instructions in config.yml           #
 #                                                                                                                  #
@@ -28,6 +28,7 @@ import json, requests
 import os
 import sys
 import yaml
+import getpass
 
 numberOfVotesPerTransaction = 33;
 
@@ -95,7 +96,6 @@ def generateVotingList():
     print "POSITIVE VOTES"
     votingPublicKeysPos = getVotingPublicKeysFromFile(True)    
     
-    #if votingPublicKeysPos and currentVotesPublicKeysPos:
     if votingPublicKeysPos and currentVotesPublicKeys:
         print "Removed the following positive votes, because you already voted for them:"
         for entry in list(set(votingPublicKeysPos) & set(currentVotesPublicKeys)):
@@ -207,12 +207,21 @@ def readConfig():
 
     config = configuration[configsection]
 
-    if config['node'] == "REPLACE_ME" or config['mySecret'] == "REPLACE_ME" or config['mySecondSecret'] == "REPLACE_ME" or config['myAddress'] == "REPLACE_ME" or config['myPublicKey'] == "REPLACE_ME" or config['positiveVotingFilename'] == "REPLACE_ME" or config['negativeVotingFilename'] == "REPLACE_ME":
+    if config['node'] == "REPLACE_ME" or config['mySecret'] == "REPLACE_ME" or ('mySecondSecret' in config and config['mySecondSecret'] == "REPLACE_ME") or config['myAddress'] == "REPLACE_ME" or config['myPublicKey'] == "REPLACE_ME" or config['positiveVotingFilename'] == "REPLACE_ME" or config['negativeVotingFilename'] == "REPLACE_ME":
         print "Please read the instructions at the top of this file and adapt the configuration in config.yml accordingly"
         exit (0)
 
     config['node'] = config['node'].rstrip('/') # Remove trailing slashes
 
+def testSecret():
+    if not config['mySecret']:
+        config['mySecret'] = getpass.getpass('Passphrase (needed for voting): ')
+
+def testSecondSecret():
+    if 'mySecondSecret' in config:
+        if not config['mySecondSecret']:
+            config['mySecondSecret'] = getpass.getpass('Second Passphrase (needed for voting): ')
+        
 readConfig()
 allDelegates = getAllDelegates()
 finalVotingList = generateVotingList()
@@ -226,6 +235,9 @@ if finalVotingList:
     if delegatesLength > numberOfVotesPerTransaction:
         print "Splitting " + str(len(finalVotingList)) + " votes into chunks of " + str(numberOfVotesPerTransaction)
 
+    testSecret()
+    testSecondSecret()
+    
     while start < delegatesLength:
         shortDelegates = finalVotingList[start:start+numberOfVotesPerTransaction]
 
@@ -234,7 +246,7 @@ if finalVotingList:
             "publicKey": config['myPublicKey'],
             "secret": config['mySecret']
         }
-        if config['mySecondSecret']:
+        if 'mySecondSecret' in config:
             payload['secondSecret'] = config['mySecondSecret']
 
         answer = sendVotings(payload)
