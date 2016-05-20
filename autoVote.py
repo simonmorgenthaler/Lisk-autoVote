@@ -241,7 +241,9 @@ if finalVotingList:
         if answer['success']:
             print "Voted successfully for " + str(len(shortDelegates)) + " delegates:"
             for delegate in shortDelegates:
-                print getDelegateName(delegate[1:])
+                prefix = delegate[0]
+                publickey = delegate[1:]
+                print prefix + getDelegateName(publickey)
         else:
             print "Error:", answer['error']
         start = start + numberOfVotesPerTransaction
