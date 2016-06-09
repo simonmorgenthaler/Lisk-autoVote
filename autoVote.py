@@ -259,6 +259,9 @@ if finalVotingList:
         else:
             print "Error:", answer['error']
         start = start + numberOfVotesPerTransaction
+        if start < delegatesLength:
+            print "Waiting 12 sec for next voting round..."
+            time.sleep(12)
         
 else:
     print "No delegates to vote for found. Exit\n"
