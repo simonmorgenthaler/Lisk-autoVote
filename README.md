@@ -1,5 +1,5 @@
 # Lisk-autoVote
-Script to vote automatically positive and negative from text files with delegate names, addresses and/or public keys.
+Script to vote automatically from text files with delegate names, addresses and/or public keys.
 
 ## Installation
 Make sure to have installed the imported python modules time, httplib, socket, json, requests, os, yaml.
@@ -8,8 +8,8 @@ Read also the header in autoVote.py, but you don't have to modify autoVote.py. A
 
 ## Configuration
 You have to modify the file config.yml to adapt it for your needs. See the instructions in config.yml. The script won't run if you don't adapt the mentioned constants.
-Add the delegates you want to vote for (positive or negative) to the files you configured in config.yml (Default is posDefault.txt and negDefault.txt). You can entere the delegate name, its address or its publickey. Put every delegate on a new line (see posDefault.txt as example)
-You can add multiple configuration secions, to vote from different account, or with different delegate files.
+Add the delegates you want to vote for to the file you configured in config.yml (Default is votes.txt). You can entere the delegate name, its address or its publickey. Put every delegate on a new line (see votes.txt as example)
+You can add multiple configuration secions, to vote from different accounts, with different delegate files.
 
 ## Usage
 Make sure this script is executable with 'chmod +x autoVote.py'
