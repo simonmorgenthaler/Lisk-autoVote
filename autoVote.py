@@ -3,12 +3,11 @@
 ####################################################################################################################
 # File name: autoVote.py                                                                                           #
 # Author: cc001                                                                                                    #
-# Last modified: 2016-05-03                                                                                        #
+# Last modified: 2016-12-10                                                                                        #
 #                                                                                                                  #
 # This is a script to vote automatically for Lisk delegates.                                                       #
 # The accounts you want to vote for must be added to text files, defined in the file config.yml.                   #
 # Put every delegatename, accountnumber, or publickey on its own line                                              #
-# You can vote positive or negative ("un-vote") in one step, just add the accounts to the appropriate file.        #
 #                                                                                                                  #
 # Installation: make sure to have installed the modules time, httplib, socket, json, requests, os, yaml, getpass   #
 # Example: For the in Ubuntu this is done with 'sudo apt-get install python-httplib2 python-requests python-yaml'  #
@@ -18,7 +17,7 @@
 # Start the script with no parameters: './autoVote.py' to use the default config                                   #
 # Or add the desired config section: './autoVote.py cc001'                                                         #
 #                                                                                                                  #
-# If you like this script, please vote for me as Delegate on test- and mainnet, Thanks!                            #
+# If you like and use this script, please vote for 'cc001' as Delegate on test- and mainnet, Thanks!               #
 ####################################################################################################################
 
 import time
