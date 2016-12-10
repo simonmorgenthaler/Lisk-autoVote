@@ -227,48 +227,59 @@ def testSecondSecret():
     if 'mySecondSecret' in config:
         if not config['mySecondSecret']:
             config['mySecondSecret'] = getpass.getpass('Second Passphrase (needed for voting): ')
+
+def checkConfirmation():
+    answer = raw_input("Execute the voting? [y/n]: ").lower()
+    execute = False
+    if answer == 'y' or answer == 'yes':
+        execute = True
+    return execute
+
         
 readConfig()
 allDelegates = getAllDelegates()
 finalVotingList = generateVotingList()
 
 if finalVotingList:
- 
-    print
-    delegatesLength = len(finalVotingList)
+    if checkConfirmation():
+      print
+      delegatesLength = len(finalVotingList)
 
-    start = 0;    
-    if delegatesLength > numberOfVotesPerTransaction:
-        print "Splitting " + str(len(finalVotingList)) + " votes into chunks of " + str(numberOfVotesPerTransaction)
+      start = 0;    
+      if delegatesLength > numberOfVotesPerTransaction:
+          print "Splitting " + str(len(finalVotingList)) + " votes into chunks of " + str(numberOfVotesPerTransaction)
 
-    testSecret()
-    testSecondSecret()
-    
-    while start < delegatesLength:
-        shortDelegates = finalVotingList[start:start+numberOfVotesPerTransaction]
+      testSecret()
+      testSecondSecret()
+      
+      while start < delegatesLength:
+          shortDelegates = finalVotingList[start:start+numberOfVotesPerTransaction]
 
-        payload = {
-            "delegates[]": shortDelegates,
-            "publicKey": config['myPublicKey'],
-            "secret": config['mySecret']
-        }
-        if 'mySecondSecret' in config:
-            payload['secondSecret'] = config['mySecondSecret']
+          payload = {
+              "delegates[]": shortDelegates,
+              "publicKey": config['myPublicKey'],
+              "secret": config['mySecret']
+          }
+          if 'mySecondSecret' in config:
+              payload['secondSecret'] = config['mySecondSecret']
 
-        answer = sendVotings(payload)
+          answer = sendVotings(payload)
           if answer and 'success' in answer and answer['success']:
-            print "Voted successfully for " + str(len(shortDelegates)) + " delegates:"
+              print "Voted successfully for " + str(len(shortDelegates)) + " delegates:"
               print "-------------------------------------------"
-            for delegate in shortDelegates:
-                prefix = delegate[0]
-                publickey = delegate[1:]
-                print prefix + getDelegateName(publickey)
-        else:
-            print "Error:", answer['error']
-        start = start + numberOfVotesPerTransaction
-        if start < delegatesLength:
-            print "Waiting 12 sec for next voting round..."
-            time.sleep(12)
+              for delegate in shortDelegates:
+                  prefix = delegate[0]
+                  publickey = delegate[1:]
+                  print prefix + getDelegateName(publickey)
+          else:
+              print "Error:", answer['error']
+          start = start + numberOfVotesPerTransaction
+          if start < delegatesLength:
+              print "Waiting 12 sec for next voting round..."
+              time.sleep(12)
+    else:
+        print ""
+        print "Aborted. Doing nothing\n"
         
 else:
     print "Doing nothing\n"
