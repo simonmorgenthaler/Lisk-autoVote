@@ -5,12 +5,12 @@
 #                                                                                                                                      #
 # Instructions:                                                                                                                        #
 # 1. Keep the indents as shown below                                                                                                   #
-# 2. You need to adapt all variables (node, mySecret, mySecret, mySecondSecret, myAddress, myPublicKey, positiveVotingFilename,        #
-#    negativeVotingFilename) and replace everywhere REPLACE_ME with your own values                                                    #
+# 2. You need to adapt all variables (node, mySecret, mySecret, mySecondSecret, myAddress, myPublicKey, votingFilename)                #
+#    and replace everywhere REPLACE_ME with your own values                                                                            #
 # 3. You can leave 'mySecret' empty like this: mySecret: "". In this case the script will ask you for the passphrase during runtime    #
 # 4. If you don't use a second passphrase, remove it completely from the config (see section cc001 below)                              #
 # 5. You can keep and use only the section "default:" if you want.                                                                     #
-#    This section is used if you dont add an additional argument to the start command. Example: './autoVote.py'                        #
+#    This section is used if you don't add an additional argument to the start command. Example: './autoVote.py'                       #
 # 6. If you want to, you can add additional config sections. This can be used if you want to vote with different accounts              #
 #    To run the script with a specific config section (not "default") you must add its name to the starting call.                      #
 #    Example: './autoVote.py cc001'                                                                                                    #
@@ -21,16 +21,14 @@
 #        mySecondSecret: "wergwer werg werg wegg"                                                                                      #
 #        myAddress: "2143123451235235L"                                                                                                #
 #        myPublicKey: "awd98wefh9qehf923hf98hf9238fh9238hf"                                                                            #
-#        positiveVotingFilename: "posDefault.txt"                                                                                      #
-#        negativeVotingFilename: "negDefault.txt"                                                                                      #
+#        votingFilename: "posDefault.txt"                                                                                              #
 #                                                                                                                                      #
 #    cc001:                                                                                                                            #
 #        node: "https://othernode.io"                                                                                                  #
 #        mySecret: ""                                                                                                                  #
 #        myAddress: "32333333333333L"                                                                                                  #
 #        myPublicKey: "aregwert8347rzr84hg283r7g23twert"                                                                               #
-#        positiveVotingFilename: "/home/cc001/pos_cc001.txt"                                                                           #
-#        negativeVotingFilename: "/home/cc001/neg_cc001.txt"                                                                           #
+#        votingFilename: "/home/cc001/cc001.txt"                                                                                       #
 #                                                                                                                                      #
 # If you like this script, please vote for me as Delegate on test- and mainnet, Thanks!                                                #
 ########################################################################################################################################
