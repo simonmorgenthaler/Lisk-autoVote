@@ -41,16 +41,12 @@ def getMyVotes():
             myVotes.append(delegate['publicKey'])
     return myVotes
 
-def getVotingPublicKeysFromFile(positive):
-    if positive:
-        votingFileName = config['positiveVotingFilename']
-        prefix = '+'
-    else:
-        votingFileName = config['negativeVotingFilename']
-        prefix = '-'
+def getVotingPublicKeysFromFile():    
+    votingFileName = config['votingFilename']
     with open(votingFileName) as filename:
         votes = filename.read().splitlines()
     votes = filter(None, votes) # remove empty lines/entries
+    votes = filter(lambda l: not l.startswith('#'), votes) #remove comments
     
     return getPublicKeys(votes)
     
@@ -77,6 +73,7 @@ def getPublicKeys(votes):
         
         if notFoundVotes:    
             print "\nNot found:"
+            print "----------"
             for notFound in notFoundVotes:
                 print notFound
         print "\n"
@@ -88,29 +85,39 @@ def getDelegateName(publicKey):
         if delegate['publicKey'] == publicKey:
             return delegate['username']
 
-def generateVotingList():
-    
+def generateVotingList():    
     currentVotesPublicKeys = getMyVotes()
+    votingPublicKeysPos = getVotingPublicKeysFromFile()
     
-    print "POSITIVE VOTES"
-    votingPublicKeysPos = getVotingPublicKeysFromFile(True)    
-    
-    if votingPublicKeysPos and currentVotesPublicKeys:
-        print "Removed the following positive votes, because you already voted for them:"
-        for entry in list(set(votingPublicKeysPos) & set(currentVotesPublicKeys)):
+    if len(currentVotesPublicKeys) > 0:
+        print ""
+        print "Voting already for these " + str(len(currentVotesPublicKeys)) + " delegates:"
+        print "--------------------------------------"
+        votedNames = []
+        for entry in currentVotesPublicKeys:
+            votedNames.append(getDelegateName(entry))
+        print ", ".join(votedNames)
+        
+    finalVotesListPos = list(set(votingPublicKeysPos) - set(currentVotesPublicKeys))
+    if len(finalVotesListPos) > 0:
+        print "" 
+        print "Adding the following votes:"
+        print "---------------------------"
+        for entry in finalVotesListPos:
             print getDelegateName(entry)
-    finalVotesListPos = list(set(votingPublicKeysPos) - set(currentVotesPublicKeys)) 
     
-    print "\nNEGATIVE VOTES"
-    votingPublicKeysNeg = getVotingPublicKeysFromFile(False)
-    
-    removedList = list(set(votingPublicKeysNeg) - (set(currentVotesPublicKeys) & set(votingPublicKeysNeg)))
-    if len(removedList) > 0: 
-        print "Removed the following negative votes, because you haven't voted for them:"
-        for entry in removedList:
+    finalVotesListNeg = list(set(currentVotesPublicKeys) - set(votingPublicKeysPos)) 
+    if len(finalVotesListNeg) > 0:
+        print ""
+        print "Removing the following votes:"
+        print "-----------------------------"
+        for entry in finalVotesListNeg:
             print getDelegateName(entry)
-    finalVotesListNeg = list(set(votingPublicKeysNeg) & set(currentVotesPublicKeys)) 
-
+    
+    if len(finalVotesListPos) == 0 and len(finalVotesListNeg) == 0:
+        print ""
+        print "The votes are already correct, doing nothing"
+    
     print "\n"
     return ['+' + votePos for votePos in finalVotesListPos] + ['-' + voteNeg for voteNeg in finalVotesListNeg]
 
@@ -206,7 +213,7 @@ def readConfig():
 
     config = configuration[configsection]
 
-    if config['node'] == "REPLACE_ME" or config['mySecret'] == "REPLACE_ME" or ('mySecondSecret' in config and config['mySecondSecret'] == "REPLACE_ME") or config['myAddress'] == "REPLACE_ME" or config['myPublicKey'] == "REPLACE_ME" or config['positiveVotingFilename'] == "REPLACE_ME" or config['negativeVotingFilename'] == "REPLACE_ME":
+    if config['node'] == "REPLACE_ME" or config['mySecret'] == "REPLACE_ME" or ('mySecondSecret' in config and config['mySecondSecret'] == "REPLACE_ME") or config['myAddress'] == "REPLACE_ME" or config['myPublicKey'] == "REPLACE_ME" or config['votingFilename'] == "REPLACE_ME":
         print "Please read the instructions at the top of this file and adapt the configuration in config.yml accordingly"
         exit (0)
 
@@ -225,7 +232,7 @@ readConfig()
 allDelegates = getAllDelegates()
 finalVotingList = generateVotingList()
 
-if finalVotingList:   
+if finalVotingList:
  
     print
     delegatesLength = len(finalVotingList)
@@ -249,8 +256,9 @@ if finalVotingList:
             payload['secondSecret'] = config['mySecondSecret']
 
         answer = sendVotings(payload)
-        if answer['success']:
+          if answer and 'success' in answer and answer['success']:
             print "Voted successfully for " + str(len(shortDelegates)) + " delegates:"
+              print "-------------------------------------------"
             for delegate in shortDelegates:
                 prefix = delegate[0]
                 publickey = delegate[1:]
@@ -263,6 +271,6 @@ if finalVotingList:
             time.sleep(12)
         
 else:
-    print "No delegates to vote for found. Exit\n"
+    print "Doing nothing\n"
 
 exit(0)
