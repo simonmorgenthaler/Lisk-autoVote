@@ -121,7 +121,6 @@ def generateVotingList():
     print "\n"
     return ['+' + votePos for votePos in finalVotesListPos] + ['-' + voteNeg for voteNeg in finalVotesListNeg]
 
-
 def sendVotings(payload):
     url = config['node'] + "/api/accounts/delegates"
     try:
@@ -274,9 +273,7 @@ if finalVotingList:
           else:
               print "Error:", answer['error']
           start = start + numberOfVotesPerTransaction
-          if start < delegatesLength:
-              print "Waiting 12 sec for next voting round..."
-              time.sleep(12)
+          print ""
     else:
         print ""
         print "Aborted. Doing nothing\n"
